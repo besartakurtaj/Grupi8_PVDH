@@ -2,6 +2,7 @@ import pandas as pd
 from data_quality import assess_data_quality
 from data_type_definition import define_data_type
 from data_sampling import perform_sampling
+from duplicates import remove_duplicates
 
 def extract_data(file_path: str) -> pd.DataFrame:
     df = pd.read_csv(file_path)
@@ -22,6 +23,9 @@ def extract_data(file_path: str) -> pd.DataFrame:
 
     duplicates = df.duplicated().sum()
     print(f"\n Duplicate Rows: {duplicates}")
+
+    df = remove_duplicates(df)
+    print(f"\n Removedmduplicates")
 
     print("\nLogical Data Issues:")
     print(quality_report["logical_issues"])

@@ -8,6 +8,7 @@ from binarization import apply_binarization
 from aggregation import add_aggregated
 from features import create_features
 from discretization import apply_discretization
+from column_names import titlecase_columns
 
 def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     
@@ -29,4 +30,6 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     #Discretization
     df = apply_discretization(df, column="daily_social_media_time", n_bins=4, strategy="uniform")
 
+    #Column names to uppercase 
+    df = titlecase_columns(df)
     return df 
