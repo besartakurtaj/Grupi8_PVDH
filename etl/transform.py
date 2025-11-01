@@ -9,6 +9,7 @@ from aggregation import add_aggregated
 from features import create_features
 from discretization import apply_discretization
 from column_names import titlecase_columns
+from selection import select_feature_subset
 
 def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     
@@ -32,4 +33,11 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
 
     #Column names to uppercase 
     df = titlecase_columns(df)
+
+    #Selektimi i vetive
+    df = select_feature_subset(
+        df,
+        keep_always=["Gender", "Age", "Job Type","Daily Social Media Time", "Social Platform Preference"],
+        corr_threshold=0.95,
+    )
     return df 
