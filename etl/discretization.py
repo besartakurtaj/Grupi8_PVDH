@@ -3,17 +3,25 @@ from sklearn.preprocessing import KBinsDiscretizer
 
 def apply_discretization(df: pd.DataFrame, column: str, n_bins: int = 4, strategy: str = "uniform") -> pd.DataFrame:
     if column not in df.columns:
-        raise ValueError(f"Column '{column}' not found in DataFrame.")
+        print(f"Warning: Column '{column}' not found in DataFrame. Skipping discretization.")
+        return df
 
     if not pd.api.types.is_numeric_dtype(df[column]):
-        raise TypeError(f"Column '{column}' is not numeric and cannot be discretized.")
+        print(f"Warning: Column '{column}' is not numeric and cannot be discretized. Skipping.")
+        return df
 
-    discretizer = KBinsDiscretizer(n_bins=n_bins, encode='ordinal', strategy=strategy)
-    df[column + "_binned"] = discretizer.fit_transform(df[[column]])
+    data_for_discretizer = df[[column]].astype('float64')
 
-    print(f"Discretization applied successfully. Created new column: '{column}_binned'")
+    try:
+        discretizer = KBinsDiscretizer(n_bins=n_bins, encode='ordinal', strategy=strategy)
+        
+        binned_data = discretizer.fit_transform(data_for_discretizer)
+        
+        df[column] = binned_data.astype(int)
+        
+        print(f"Discretization applied successfully: Column '{column}' was overwritten with {n_bins} ordinal bins.")
 
-    # # Optionally convert the new column to category for later use
-    # df[column + "_binned"] = df[column + "_binned"].astype("category")
+    except ValueError as e:
+        print(f"Error applying discretization to column '{column}': {e}")
 
     return df

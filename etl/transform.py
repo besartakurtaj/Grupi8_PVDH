@@ -35,7 +35,7 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     # df = select_features(df)
 
     #Discretization
-    df = apply_discretization(df, column="daily_social_media_time", n_bins=4, strategy="uniform")
+    df = apply_discretization(df, column="age", n_bins=5, strategy="uniform")
 
     #Dimension Reduction
     df = reduce_dimensions_enhanced(df, protected_cols=protected_cols, corr_threshold=0.98)
