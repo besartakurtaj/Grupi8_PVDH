@@ -65,11 +65,9 @@ pip install pandas numpy scikit-learn
    data/processed_dataset.csv
 
 ---
----
-
 Authors: 
-        Besarta Kurtaj
-        Enis Hoxha
+        Besarta Kurtaj,
+        Enis Hoxha,
         Shefket Bylygbashi  
 Year: 2025  
 University of Pristina – Faculty of Electrical and Computer Engineering
