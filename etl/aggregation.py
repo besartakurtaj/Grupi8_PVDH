@@ -7,9 +7,10 @@ def add_aggregated(df: pd.DataFrame) -> pd.DataFrame:
 
     global_avg = df["perceived_productivity_score"].mean()
 
+    q1, q2 = job_avg["avg_perceived_prod"].quantile([0.33, 0.66])
     job_avg["job_optimism"] = pd.cut(
         job_avg["avg_perceived_prod"],
-        bins=[-999, global_avg - 0.5, global_avg + 0.5, 999],
+        bins=[-999, q1, q2, 999],
         labels=["Pessimistic Job", "Neutral Job", "Optimistic Job"]
     )
 

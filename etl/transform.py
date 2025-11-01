@@ -14,6 +14,8 @@ from features import create_features
 from discretization import apply_discretization
 from column_names import titlecase_columns
 from selection import select_feature_subset
+from feature_reduction_enhanced import reduce_dimensions_enhanced
+from protected_cols import protected_cols
 
 def transform_data(df: pd.DataFrame) -> pd.DataFrame:
     
@@ -34,6 +36,9 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
 
     #Discretization
     df = apply_discretization(df, column="daily_social_media_time", n_bins=4, strategy="uniform")
+
+    #Dimension Reduction
+    df = reduce_dimensions_enhanced(df, protected_cols=protected_cols, corr_threshold=0.98)
 
     #Column names to uppercase 
     df = titlecase_columns(df)
