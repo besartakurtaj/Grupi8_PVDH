@@ -13,7 +13,7 @@
 </table>
 
 
-# Social Media vs Productivity – ETL Data Preprocessing Pipeline
+# Social Media vs Productivity - ETL Data Preprocessing Pipeline
 
 This project implements a **modular ETL (Extract, Transform, Load)** pipeline for analyzing how **social media usage** affects **productivity and stress levels**.
 It is designed for **academic coursework and real-world data engineering**, applying professional preprocessing, cleaning, and feature engineering techniques.
@@ -61,6 +61,17 @@ etl/
 ├─ selection.py
 ├─ transform.py
 ```
+
+---
+
+## Dataset
+
+**Source (raw):** `data/Social_media_and_productivity.csv`  
+**Processed (output):** `data/processed_data.csv`
+
+### What these files are
+- **`social_media_vs_productivity.csv`** - the **original** dataset exactly as provided.
+- **`processed_data.csv`** - the **transformed** dataset produced by our ETL pipeline.
 
 ---
 
