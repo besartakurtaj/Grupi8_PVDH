@@ -56,7 +56,6 @@ coverage.xml
 *.log
 
 # Data files
-*.csv
 *.json
 *.sqlite3
 
