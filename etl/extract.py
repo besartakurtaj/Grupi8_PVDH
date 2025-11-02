@@ -34,7 +34,7 @@ def extract_data(file_path: str) -> pd.DataFrame:
     print(f"\n Duplicate Rows: {duplicates}")
 
     df = remove_duplicates(df)
-    print(f"\n Removedmduplicates")
+    print(f"\n Removed duplicates")
 
     print("\nLogical Data Issues:")
     print(quality_report["logical_issues"])
@@ -46,6 +46,7 @@ def extract_data(file_path: str) -> pd.DataFrame:
     for col in df.select_dtypes(include=["object"]).columns[:19]:
         print(f"{col}: {df[col].nunique()} unique values")
 
-    df_sample = perform_sampling(df, method="stratified", frac=0.1)
+    df_sample = perform_sampling(df, method="stratified", frac=0.67)
+    df_sample = df_sample.reset_index(drop=True)
 
-    return df
+    return df_sample
