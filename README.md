@@ -77,19 +77,20 @@ etl/
 
 ### Results
 
-After running the ETL pipeline, the raw dataset on social media usage and productivity was successfully transformed into a clean and structured dataset.
-The processed data now meets high standards of data quality for further analytics.
+- After running the ETL pipeline, the raw dataset on social media usage and productivity was successfully transformed into a clean and structured dataset.
+- The processed data now meets high standards of data quality for further analytics.
 
 ---
 
 ### Outcomes
 
-Removed duplicate entries and invalid records. Missing values were imputed based on logical and statistical relationships among features.
-Ensured consistent data types, verified expected value ranges and fixed outliers.
-Created new indicators such as total_screen_time, social_media_ratio, and productivity_score to quantify user behavior and focus.
-Converted categorical variables into numerical form using label. Continuous variables were discretized into interpretable intervals.
-Reduced redundant or highly correlated features, keeping only the most informative variables.
-Aggregated behavior metrics by user groups and balanced the dataset for analysis.
+
+- Removed duplicate entries and invalid records. Missing values were imputed based on logical and statistical relationships among features.  
+- Ensured consistent data types, verified expected value ranges and fixed outliers.  
+- Created new indicators such as `total_screen_time`, `social_media_ratio`, and `productivity_score` to quantify user behavior and focus.  
+- Converted categorical variables into numerical form using label encoding. Continuous variables were discretized into interpretable intervals.  
+- Reduced redundant or highly correlated features, keeping only the most informative variables.  
+- Aggregated behavior metrics by user groups and balanced the dataset for analysis.
 
 ---
 
