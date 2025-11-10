@@ -87,7 +87,7 @@ etl/
 
 - Removed duplicate entries and invalid records. Missing values were imputed based on logical and statistical relationships among features.  
 - Ensured consistent data types, verified expected value ranges and fixed outliers.  
-- Created new indicators such as `total_screen_time`, `social_media_ratio`, and `productivity_score` to quantify user behavior and focus.  
+- Created new indicators to quantify user behavior and focus.  
 - Converted categorical variables into numerical form using label encoding. Continuous variables were discretized into interpretable intervals.  
 - Reduced redundant or highly correlated features, keeping only the most informative variables.  
 - Aggregated behavior metrics by user groups and balanced the dataset for analysis.
