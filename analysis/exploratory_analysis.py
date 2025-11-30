@@ -11,7 +11,10 @@ print("\nSummary Statistics:")
 print(df.describe(include="all"))
 
 print("\nMissing Values:")
+
 print(df.isnull().sum())
+
+print("\nTotal Missing Values in Dataset:", df.isnull().sum().sum())
 
 numeric_cols = df.select_dtypes(include=[np.number]).columns
 categorical_cols = df.select_dtypes(exclude=[np.number]).columns
