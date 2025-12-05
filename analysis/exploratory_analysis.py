@@ -57,3 +57,12 @@ for col in categorical_cols:
     print("Mesatarja:", df[col].mean())
     print("Mediana:", df[col].median())
     print("Devijimi standard:", df[col].std())
+
+print("\nDetailed Numeric Stats:")
+for col in numeric_cols:
+    print(f"\nKolona: {col}")
+    print("Min:", df[col].min())
+    print("Max:", df[col].max())
+    print("Mesatarja:", df[col].mean())
+    print("Mediana:", df[col].median())
+    print("Devijimi standard:", df[col].std())
