@@ -36,6 +36,10 @@ df["is_outlier"] = (outliers_iqr | outliers_z).any(axis=1)
 
 print(f"\nTotal outliers detected: {df['is_outlier'].sum()} of {len(df)} rows")
 
+removed_outliers = df[df["is_outlier"] == True]
+removed_outliers.to_csv("removed_outliers_log.csv", index=False)
+print("Saved → removed_outliers_log.csv (trace of removed rows)")
+
 df.to_csv("dataset_with_outliers_flag.csv", index=False)
 print("Saved → dataset_with_outliers_flag.csv")
 
