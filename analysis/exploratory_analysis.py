@@ -50,13 +50,23 @@ else:
 
 print("\nMultivariate Analysis (Grouped Averages):")
 for col in categorical_cols:
-    print(f"\nStats grouped by: {col}")
-    group_stats = df.groupby(col)[numeric_cols].mean()
+    print(f" Analyzing category: {col}")
+
+    print("\nCategory Distribution:")
+    print(df[col].value_counts())
+    print("\nPercentage Distribution:")
+    print((df[col].value_counts(normalize=True) * 100).round(2))
+
+    print("\nAverage Numeric Values by Category:")
+    group_stats = df.groupby(col)[numeric_cols].mean().round(2)
     print(group_stats)
-    print("Max:", df[col].max())
-    print("Mesatarja:", df[col].mean())
-    print("Mediana:", df[col].median())
-    print("Devijimi standard:", df[col].std())
+
+    print("\nVariation (Std Dev) by Category:")
+    print(df.groupby(col)[numeric_cols].std().round(2))
+
+    print("\nTop numeric feature differences:")
+    print(group_stats.max() - group_stats.min())
+
 
 print("\nDetailed Numeric Stats:")
 for col in numeric_cols:
