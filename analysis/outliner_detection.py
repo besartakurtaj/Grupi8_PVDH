@@ -37,11 +37,11 @@ df["is_outlier"] = (outliers_iqr | outliers_z).any(axis=1)
 print(f"\nTotal outliers detected: {df['is_outlier'].sum()} of {len(df)} rows")
 
 removed_outliers = df[df["is_outlier"] == True]
-removed_outliers.to_csv("removed_outliers_log.csv", index=False)
-print("Saved → removed_outliers_log.csv (trace of removed rows)")
+removed_outliers.to_csv("../data/removed_outliers_log.csv", index=False)
+print("Saved → /data/removed_outliers_log.csv (trace of removed rows)")
 
-df.to_csv("dataset_with_outliers_flag.csv", index=False)
-print("Saved → dataset_with_outliers_flag.csv")
+df.to_csv("../data/dataset_with_outliers_flag.csv", index=False)
+print("Saved → /data/dataset_with_outliers_flag.csv")
 
 print("\nDiagnostic info:")
 for col in numeric_cols:
@@ -52,8 +52,8 @@ df_clean = df[df["is_outlier"] == False].copy()
 print(f"\nOriginal dataset: {df.shape}")
 print(f"After removing outliers: {df_clean.shape}")
 
-df_clean.to_csv("cleaned_dataset.csv", index=False)
-print("Saved → cleaned_dataset.csv")
+df_clean.to_csv("../data/cleaned_dataset.csv", index=False)
+print("Saved → /data/cleaned_dataset.csv")
 
 print("\nSummary statistics (cleaned):")
 print(df_clean.describe(include='all'))
