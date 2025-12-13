@@ -4,11 +4,12 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-os.makedirs('../output', exist_ok=True)
+os.makedirs('../analysis/output', exist_ok=True)
 print("✓ Output directory ready\n")
 
 sns.set_style("whitegrid")
-plt.rcParams['figure.figsize'] = (12, 6)
+plt.rcParams['figure.dpi'] = 100
+plt.rcParams['font.size'] = 11
 
 df = pd.read_csv("../data/cleaned_dataset.csv")
 
@@ -20,79 +21,17 @@ print("\nSummary Statistics (All Columns):")
 print(df.describe(include="all"))
 
 print("\nMissing Values per Column:")
+
 print(df.isnull().sum())
+
 print("\nTotal Missing Values in Dataset:", df.isnull().sum().sum())
 
 numeric_cols = df.select_dtypes(include=[np.number]).columns
 categorical_cols = df.select_dtypes(exclude=[np.number]).columns
 
-print("\nNumeric Columns:", list(numeric_cols))
-print("\nCategorical Columns:", list(categorical_cols))
-
-
-if df.isnull().sum().sum() > 0:
-    plt.figure(figsize=(10, 6))
-    missing_data = df.isnull().sum()
-    missing_data = missing_data[missing_data > 0].sort_values(ascending=False)
-    plt.bar(range(len(missing_data)), missing_data.values)
-    plt.xticks(range(len(missing_data)), missing_data.index, rotation=45, ha='right')
-    plt.title('Missing Values per Column')
-    plt.ylabel('Count')
-    plt.tight_layout()
-    plt.savefig('../output/missing_values.png', dpi=300, bbox_inches='tight')
-    plt.show()
-    print("\n✓ Saved: missing_values.png")
-
-if len(numeric_cols) > 0:
-    n_cols = min(3, len(numeric_cols))
-    n_rows = int(np.ceil(len(numeric_cols) / n_cols))
-
-    fig, axes = plt.subplots(n_rows, n_cols, figsize=(15, 4 * n_rows))
-    axes = axes.flatten() if len(numeric_cols) > 1 else [axes]
-
-    for idx, col in enumerate(numeric_cols):
-        sns.histplot(df[col].dropna(), kde=True, ax=axes[idx], color='steelblue')
-        axes[idx].set_title(f'Distribution of {col}')
-        axes[idx].set_xlabel(col)
-        axes[idx].set_ylabel('Frequency')
-
-    for idx in range(len(numeric_cols), len(axes)):
-        axes[idx].axis('off')
-
-    plt.tight_layout()
-    plt.savefig('../output/numeric_distributions.png', dpi=300, bbox_inches='tight')
-    plt.show()
-    print("✓ Saved: numeric_distributions.png")
-
-if len(numeric_cols) > 0:
-    fig, axes = plt.subplots(n_rows, n_cols, figsize=(15, 4 * n_rows))
-    axes = axes.flatten() if len(numeric_cols) > 1 else [axes]
-
-    for idx, col in enumerate(numeric_cols):
-        sns.boxplot(y=df[col], ax=axes[idx], color='lightcoral')
-        axes[idx].set_title(f'Box Plot of {col}')
-        axes[idx].set_ylabel(col)
-
-    for idx in range(len(numeric_cols), len(axes)):
-        axes[idx].axis('off')
-
-    plt.tight_layout()
-    plt.savefig('../output/numeric_boxplots.png', dpi=300, bbox_inches='tight')
-    plt.show()
-    print("✓ Saved: numeric_boxplots.png")
-
-print("\nDetailed Numeric Stats:")
-for col in numeric_cols:
-    print(f"\nColumn: {col}")
-    print("Min:", df[col].min())
-    print("Max:", df[col].max())
-    print("Mean:", df[col].mean())
-    print("Median:", df[col].median())
-    print("Standard Deviation:", df[col].std())
-
 print("\nDetailed Categorical Stats:")
 for col in categorical_cols:
-    print(f"\nAnalyzing category column: {col}")
+    print(f" Analyzing category column: {col}")
 
     print("\nCategory Distribution:")
     print(df[col].value_counts())
@@ -100,34 +39,10 @@ for col in categorical_cols:
     print("\nPercentage Distribution:")
     print((df[col].value_counts(normalize=True) * 100).round(2))
 
-    plt.figure(figsize=(10, 6))
-    value_counts = df[col].value_counts()
-
-    if len(value_counts) <= 20:  # Only plot if reasonable number of categories
-        sns.countplot(data=df, y=col, order=value_counts.index, palette='viridis')
-        plt.title(f'Distribution of {col}')
-        plt.xlabel('Count')
-        plt.tight_layout()
-        plt.savefig(f'../output/categorical_{col}.png', dpi=300, bbox_inches='tight')
-        plt.show()
-        print(f"✓ Saved: categorical_{col}.png")
-    else:
-        print(f"  (Skipping plot - too many categories: {len(value_counts)})")
-
-
 if len(numeric_cols) > 1:
     print("\nCorrelation Matrix:")
     corr = df[numeric_cols].corr()
     print(corr.round(3))
-
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(corr, annot=True, fmt='.2f', cmap='coolwarm',
-                center=0, square=True, linewidths=1, cbar_kws={"shrink": 0.8})
-    plt.title('Correlation Matrix Heatmap')
-    plt.tight_layout()
-    plt.savefig('../output/correlation_heatmap.png', dpi=300, bbox_inches='tight')
-    plt.show()
-    print("✓ Saved: correlation_heatmap.png")
 
     print("\nTop 10 Strongest Correlations:")
     corr_pairs = corr.abs().unstack()
@@ -137,42 +52,231 @@ if len(numeric_cols) > 1:
 else:
     print("\nNot enough numeric columns for correlation.")
 
-print("\nMultivariate Analysis (Grouped Averages):")
-for col in categorical_cols:
-    print(f"\nGrouping by: {col}")
 
-    print("\nAverage Numeric Values by Category:")
-    group_stats = df.groupby(col)[numeric_cols].mean().round(2)
-    print(group_stats)
+print("\n" + "=" * 70)
+print("GRAPH 1: Top 10 Strongest Correlations")
+print("=" * 70)
 
-    print("\nVariation (Std Dev) by Category:")
-    group_std = df.groupby(col)[numeric_cols].std().round(2)
-    print(group_std)
+corr = df[numeric_cols].corr()
+corr_pairs = corr.abs().unstack()
+corr_pairs = corr_pairs[corr_pairs < 1]
+corr_pairs = corr_pairs.dropna().sort_values(ascending=False).head(10)
 
-    print("\nTop numeric feature differences:")
-    print(group_stats.max() - group_stats.min())
+correlations = []
+labels = []
+for idx, value in corr_pairs.items():
+    actual_corr = corr.loc[idx[0], idx[1]]
+    correlations.append(actual_corr)
+    label1 = idx[0].replace('Social Platform Preference ', '').replace('_', ' ')
+    label2 = idx[1].replace('Social Platform Preference ', '').replace('_', ' ')
+    labels.append(f"{label1}\n& {label2}")
 
-    if len(df[col].unique()) <= 10 and len(numeric_cols) > 0:
-        n_numeric = len(numeric_cols)
-        fig, axes = plt.subplots(1, min(3, n_numeric), figsize=(15, 5))
-        if n_numeric == 1:
-            axes = [axes]
-        elif n_numeric < 3:
-            axes = axes.flatten()
+fig, ax = plt.subplots(figsize=(14, 9))
+colors = ['#2ecc71' if x > 0 else '#e74c3c' for x in correlations]
+bars = ax.barh(range(len(correlations)), correlations, color=colors,
+               edgecolor='black', linewidth=1.5, alpha=0.8)
 
-        for idx, num_col in enumerate(list(numeric_cols)[:3]):
-            if idx < len(axes):
-                group_stats[num_col].plot(kind='bar', ax=axes[idx], color='teal')
-                axes[idx].set_title(f'Average {num_col} by {col}')
-                axes[idx].set_ylabel(f'Mean {num_col}')
-                axes[idx].set_xlabel(col)
-                axes[idx].tick_params(axis='x', rotation=45)
+for i, v in enumerate(correlations):
+    ax.text(v + 0.02 if v > 0 else v - 0.02, i, f'{v:.3f}',
+            va='center', fontweight='bold', fontsize=11,
+            ha='left' if v > 0 else 'right')
 
-        plt.tight_layout()
-        plt.savefig(f'../output/grouped_analysis_{col}.png', dpi=300, bbox_inches='tight')
-        plt.show()
-        print(f"✓ Saved: grouped_analysis_{col}.png")
+ax.set_yticks(range(len(labels)))
+ax.set_yticklabels(labels, fontsize=10)
+ax.set_xlabel('Correlation Coefficient', fontsize=13, fontweight='bold')
+ax.set_title('Top 10 Strongest Variable Correlations\n(Positive correlations shown in green)',
+             fontsize=16, fontweight='bold', pad=20)
+ax.axvline(x=0, color='black', linestyle='-', linewidth=1.5)
+ax.set_xlim(-0.1, 1.05)
+ax.grid(True, alpha=0.3, axis='x')
 
-print("\n" + "=" * 50)
-print("All visualizations saved to ../output/ directory!")
-print("=" * 50)
+plt.tight_layout()
+plt.savefig('../analysis/output/top_correlations.png', dpi=300, bbox_inches='tight')
+plt.show()
+print("✓ Saved: top_correlations.png")
+print(f"  • Strongest: Productivity measures")
+print(f"  • Critical: Social Media ↔ Distraction Load")
+
+
+print("\n" + "=" * 70)
+print("GRAPH 2: Risk Factor Prevalence (ALARMING STATISTICS)")
+print("=" * 70)
+
+risk_factors = {
+    'Too Many Notifications': 'Too Many Notifications',
+    'Burnout Risk': 'Burnout Risk',
+    'High Stress': 'High Stress',
+    'Low Sleep': 'Low Sleep',
+    'Social Addicted': 'Social Media Addiction'
+}
+
+risk_percentages = []
+risk_labels = []
+risk_counts = []
+
+for col, label in risk_factors.items():
+    if col in df.columns:
+        count = df[col].sum()
+        percentage = (count / len(df)) * 100
+        risk_percentages.append(percentage)
+        risk_labels.append(label)
+        risk_counts.append(count)
+
+fig, ax = plt.subplots(figsize=(12, 8))
+
+colors_gradient = ['#c0392b', '#e74c3c', '#e67e22', '#f39c12', '#3498db']
+bars = ax.barh(range(len(risk_labels)), risk_percentages,
+               color=colors_gradient, edgecolor='black', linewidth=2, alpha=0.85)
+
+for i, (pct, count) in enumerate(zip(risk_percentages, risk_counts)):
+    ax.text(pct + 1.5, i, f'{pct:.1f}%\n({count:,} people)',
+            va='center', fontweight='bold', fontsize=11)
+
+ax.set_yticks(range(len(risk_labels)))
+ax.set_yticklabels(risk_labels, fontsize=12, fontweight='bold')
+ax.set_xlabel('Percentage of Population Affected (%)', fontsize=13, fontweight='bold')
+ax.set_title('Risk Factor Prevalence in Dataset\nCritical Health & Wellbeing Indicators',
+             fontsize=16, fontweight='bold', pad=20, color='#c0392b')
+ax.set_xlim(0, 100)
+ax.grid(True, alpha=0.3, axis='x')
+
+ax.axvline(x=50, color='red', linestyle='--', linewidth=2, alpha=0.5, label='50% threshold')
+ax.legend(fontsize=10)
+
+plt.tight_layout()
+plt.savefig('../analysis/output/risk_prevalence.png', dpi=300, bbox_inches='tight')
+plt.show()
+print("✓ Saved: risk_prevalence.png")
+
+
+print("\n" + "=" * 70)
+print("GRAPH 3: Stress Impact on Productivity & Job Satisfaction")
+print("=" * 70)
+
+if all(col in df.columns for col in ['Stress Level', 'Actual Productivity Score', 'Job Satisfaction Score']):
+    fig, axes = plt.subplots(1, 2, figsize=(16, 7))
+
+    scatter1 = axes[0].scatter(df['Stress Level'],
+                               df['Actual Productivity Score'],
+                               c=df['Job Satisfaction Score'],
+                               s=50, alpha=0.6, cmap='RdYlGn',
+                               edgecolors='black', linewidth=0.3)
+
+    z = np.polyfit(df['Stress Level'], df['Actual Productivity Score'], 1)
+    p = np.poly1d(z)
+    axes[0].plot(df['Stress Level'].sort_values(),
+                 p(df['Stress Level'].sort_values()),
+                 "r--", linewidth=3, label=f'Trend: r={df["Stress Level"].corr(df["Actual Productivity Score"]):.3f}')
+
+    axes[0].set_xlabel('Stress Level', fontsize=12, fontweight='bold')
+    axes[0].set_ylabel('Actual Productivity Score', fontsize=12, fontweight='bold')
+    axes[0].set_title('Stress vs Productivity\n(Color = Job Satisfaction)',
+                      fontsize=14, fontweight='bold')
+    axes[0].legend(fontsize=10)
+    axes[0].grid(True, alpha=0.3)
+
+    cbar1 = plt.colorbar(scatter1, ax=axes[0])
+    cbar1.set_label('Job Satisfaction', fontweight='bold')
+
+    scatter2 = axes[1].scatter(df['Stress Level'],
+                               df['Job Satisfaction Score'],
+                               c=df['Actual Productivity Score'],
+                               s=50, alpha=0.6, cmap='viridis',
+                               edgecolors='black', linewidth=0.3)
+
+    z2 = np.polyfit(df['Stress Level'], df['Job Satisfaction Score'], 1)
+    p2 = np.poly1d(z2)
+    axes[1].plot(df['Stress Level'].sort_values(),
+                 p2(df['Stress Level'].sort_values()),
+                 "r--", linewidth=3, label=f'Trend: r={df["Stress Level"].corr(df["Job Satisfaction Score"]):.3f}')
+
+    axes[1].set_xlabel('Stress Level', fontsize=12, fontweight='bold')
+    axes[1].set_ylabel('Job Satisfaction Score', fontsize=12, fontweight='bold')
+    axes[1].set_title('Stress vs Job Satisfaction\n(Color = Productivity)',
+                      fontsize=14, fontweight='bold')
+    axes[1].legend(fontsize=10)
+    axes[1].grid(True, alpha=0.3)
+
+    cbar2 = plt.colorbar(scatter2, ax=axes[1])
+    cbar2.set_label('Productivity', fontweight='bold')
+
+    plt.suptitle('Impact of Stress on Work Performance',
+                 fontsize=16, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig('../analysis/output/stress_impact.png', dpi=300, bbox_inches='tight')
+    plt.show()
+    print("✓ Saved: stress_impact.png")
+
+    corr_stress_prod = df['Stress Level'].corr(df['Actual Productivity Score'])
+    corr_stress_sat = df['Stress Level'].corr(df['Job Satisfaction Score'])
+    print(f"  • Stress-Productivity correlation: {corr_stress_prod:.3f}")
+    print(f"  • Stress-Satisfaction correlation: {corr_stress_sat:.3f}")
+
+
+print("\n" + "=" * 70)
+print("GRAPH 4: Dataset Demographics")
+print("=" * 70)
+
+fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+
+if 'Gender' in df.columns:
+    gender_counts = df['Gender'].value_counts()
+    colors_gender = ['#3498db', '#e74c3c', '#95a5a6']
+    explode = (0.05, 0.05, 0.1)
+
+    axes[0, 0].pie(gender_counts.values, labels=gender_counts.index,
+                   autopct='%1.1f%%', colors=colors_gender, explode=explode,
+                   startangle=90, textprops={'fontsize': 12, 'fontweight': 'bold'},
+                   shadow=True)
+    axes[0, 0].set_title('Gender Distribution', fontsize=14, fontweight='bold', pad=15)
+
+if 'Gender' in df.columns:
+    axes[0, 1].bar(gender_counts.index, gender_counts.values,
+                   color=colors_gender, edgecolor='black', linewidth=2)
+    axes[0, 1].set_ylabel('Count', fontsize=12, fontweight='bold')
+    axes[0, 1].set_title('Gender Count', fontsize=14, fontweight='bold', pad=15)
+    axes[0, 1].grid(True, alpha=0.3, axis='y')
+
+    for i, v in enumerate(gender_counts.values):
+        axes[0, 1].text(i, v + 100, f'{v:,}\n({v / len(df) * 100:.1f}%)',
+                        ha='center', fontweight='bold', fontsize=11)
+
+if 'Job Type' in df.columns:
+    job_counts = df['Job Type'].value_counts()
+    colors_job = sns.color_palette("husl", len(job_counts))
+
+    axes[1, 0].barh(range(len(job_counts)), job_counts.values,
+                    color=colors_job, edgecolor='black', linewidth=1.5)
+    axes[1, 0].set_yticks(range(len(job_counts)))
+    axes[1, 0].set_yticklabels(job_counts.index, fontsize=11)
+    axes[1, 0].set_xlabel('Count', fontsize=12, fontweight='bold')
+    axes[1, 0].set_title('Job Type Distribution', fontsize=14, fontweight='bold', pad=15)
+    axes[1, 0].grid(True, alpha=0.3, axis='x')
+
+    for i, v in enumerate(job_counts.values):
+        axes[1, 0].text(v + 30, i, f'{v:,} ({v / len(df) * 100:.1f}%)',
+                        va='center', fontweight='bold', fontsize=10)
+
+if 'Job Optimism' in df.columns:
+    optimism_counts = df['Job Optimism'].value_counts()
+    colors_opt = ['#2ecc71', '#f39c12', '#e74c3c']
+
+    axes[1, 1].bar(range(len(optimism_counts)), optimism_counts.values,
+                   color=colors_opt, edgecolor='black', linewidth=2)
+    axes[1, 1].set_xticks(range(len(optimism_counts)))
+    axes[1, 1].set_xticklabels([x.replace(' Job', '') for x in optimism_counts.index],
+                               fontsize=11, rotation=15)
+    axes[1, 1].set_ylabel('Count', fontsize=12, fontweight='bold')
+    axes[1, 1].set_title('Job Optimism Distribution', fontsize=14, fontweight='bold', pad=15)
+    axes[1, 1].grid(True, alpha=0.3, axis='y')
+
+    for i, v in enumerate(optimism_counts.values):
+        axes[1, 1].text(i, v + 100, f'{v:,}\n({v / len(df) * 100:.1f}%)',
+                        ha='center', fontweight='bold', fontsize=11)
+
+plt.suptitle(f'Dataset Demographics Overview\n(Total: {len(df):,} participants)',
+             fontsize=16, fontweight='bold', y=0.995)
+plt.tight_layout()
+plt.savefig('../analysis/output/demographics.png', dpi=300, bbox_inches='tight')
+plt.show()
+print("✓ Saved: demographics.png")
