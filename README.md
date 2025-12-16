@@ -19,130 +19,236 @@ This project implements a **modular ETL (Extract, Transform, Load)** pipeline fo
 It is designed for **academic coursework and real-world data engineering**, applying professional preprocessing, cleaning, and feature engineering techniques.
 
 ---
+## Phase 1 – Data Extraction, Validation, and Core Preparation
 
-## Overview
+Phase 1 focuses on loading raw data, enforcing data consistency, performing initial validation, and preparing a clean, well-typed dataset ready for further preprocessing and feature engineering.
 
-### Objective
+### Objectives
 
-To transform raw behavioral data into a structured, enriched dataset that supports **machine learning**, **statistical analysis**, and **visual analytics**.
+Load raw CSV data
 
-### Workflow Summary
+Enforce consistent data types
 
-1. Extract raw data and profile it.
-2. Validate and clean with logical quality checks.
-3. Impute missing values using dependency relationships.
-4. Encode and discretize categorical and numerical variables.
-5. Engineer new behavioral and psychological indicators.
-6. Reduce redundancy via correlation-based feature selection.
-7. Export a clean, ready-to-analyze dataset.
-8. Detect and remove statistical outliers using IQR and Z-Score methods.
-9. Perform exploratory data analysis to uncover trends and correlations.
+Detect and remove duplicates
 
----
+Assess data quality and logical inconsistencies
 
-## ETL Pipeline Structure
+Perform controlled sampling
 
-```text
-etl/
-├─ aggregation.py
-├─ binarization.py
-├─ column_names.py
-├─ data_quality.py
-├─ data_sampling.py
-├─ data_type_definition.py
-├─ dependency_map.py
-├─ discretization.py
-├─ duplicates.py
-├─ extract.py
-├─ feature_reduction_enhanced.py
-├─ features.py
-├─ load.py
-├─ main.py
-├─ missingValues.py
-├─ protected_cols.py
-├─ selection.py
-├─ transform.py
-analysis/
-├─ outlier_detection.py
-├─ exploratory_analysis.py
-```
+Prepare the dataset for downstream transformations
 
----
+### Files and Responsibilities
+#### extract.py
 
-## Dataset
+Main entry point for Phase 1.
 
-**Source (raw):** `data/Social_media_and_productivity.csv`  
-**Processed (output):** `data/processed_data.csv`
-**Cleaned (output):** `data/cleaned_dataset.csv`
+Reads the raw CSV file
 
-### What these files are
-- **`social_media_vs_productivity.csv`** - the **original** dataset exactly as provided.
-- **`processed_data.csv`** - the **transformed** dataset produced by our ETL pipeline.
-- **`cleaned_dataset.csv`** - the **clean** dataset ready for exploratory analysis.
+Applies data type definitions
 
----
+Assesses data quality and logical constraints
 
-### Results
+Reports missing values, duplicates, and descriptive statistics
 
-- After running the ETL pipeline, the raw dataset on social media usage and productivity was successfully transformed into a clean and structured dataset.
-- The processed data now meets high standards of data quality for further analytics.
-- Statistical anomalies were identified and removed, revealing clearer correlations between social media habits and stress levels.
+Removes duplicate rows
 
----
+Performs stratified sampling (default: 50%)
 
-### Outcomes
+Returns a cleaned pandas DataFrame
 
-- Removed duplicate entries and invalid records. Missing values were imputed based on logical and statistical relationships among features.  
-- Ensured consistent data types, verified expected value ranges and fixed outliers.  
-- Created new indicators to quantify user behavior and focus.  
-- Converted categorical variables into numerical form using label encoding. Continuous variables were discretized into interpretable intervals.  
-- Reduced redundant or highly correlated features, keeping only the most informative variables.  
-- Aggregated behavior metrics by user groups and balanced the dataset for analysis.
-- Applied IQR and Z-Score methods to detect and handle outliers, ensuring statistical validity.
-- Conducted multivariate analysis to uncover relationships and dependencies between variables.
+This script orchestrates most Phase 1 components and produces the dataset used in later phases.
 
----
+#### data_type_definition.py
 
-### Raw dataset
+Data type enforcement layer.
 
-<img width="1650" height="649" alt="{DB5F91EF-1358-42D8-AE0B-B559066B8FF2}" src="https://github.com/user-attachments/assets/2f0b7bb2-984e-4482-80bb-b3391977b6c1" />
+Defines a centralized TYPE_MAPPING for all expected columns
 
-### Processed dataset 
+Converts columns to appropriate pandas dtypes (Int64, float64, category)
 
-<img width="1898" height="638" alt="{2A39D00C-EA79-422A-9FEF-613F23356E1F}" src="https://github.com/user-attachments/assets/365f3f02-bdc6-4aa9-a5fa-9c688bac45fc" />
+Logs warnings when conversions fail
 
-### Cleaned dataset
+Prints final column data types for verification
 
-<img width="2549" height="1154" alt="image" src="https://github.com/user-attachments/assets/4336f94f-6533-4bc2-940f-aa522a7b10f9" />
+Ensures schema consistency across the pipeline.
 
-## Requirements
+#### duplicates.py
 
-Install the required Python packages before running the project:
+Duplicate handling utility.
 
-pip install pandas numpy scikit-learn
+Removes duplicate rows from the dataset
 
----
+Supports optional column subsets and retention strategy
 
-## How to Run
+Reports how many rows were removed
 
-1. Place your raw dataset (e.g., social_media_vs_productivity.csv) inside the data/ folder.Example path:
-   data/social_media_vs_productivity.csv
-2. Open a terminal or command prompt in the project directory.
-3. Run the ETL pipeline using:
-   python etl/main.py
-4. The processed dataset will be saved automatically to:
-   data/processed_dataset.csv
-5. Run the outlier detection script:
-   python analysis/outlier_detection.py
-6. The cleaned dataset will be saved to:
-   data/cleaned_dataset.csv
-7. Run the exploratory analysis:
-   python analysis/exploratory_analysis.py
+Used during extraction to ensure data uniqueness.
 
----
+#### data_quality.py
 
-Authors:
-        Besarta Kurtaj,
-        Enis Hoxha,
-        Shefket Bylygbashi
-Year: 2025
+Logical data validation module.
+
+Performs rule-based checks (e.g. age range, work hours, stress score bounds)
+
+Detects logically invalid or extreme values
+
+Produces a structured report of detected issues
+
+This step does not remove data but provides transparency and diagnostics.
+
+#### data_sampling.py
+
+Sampling strategy implementation.
+
+Supports:
+
+Simple random sampling
+
+Stratified sampling (by job_type when available)
+
+Configurable sampling fraction and random seed
+
+Used in Phase 1 to reduce dataset size while preserving representativeness.
+
+#### column_names.py
+
+Column formatting utility.
+
+Converts snake_case column names into Title Case with spaces
+
+Can be run as a standalone script for CSV transformation
+
+Optional helper for presentation and reporting purposes.
+
+Additional Phase 1 Components (ETL Completion)
+
+Phase 1 also includes the full ETL (Extract–Transform–Load) flow, covering advanced cleaning, feature creation, dimensionality reduction, and dataset persistence.
+
+#### main.py
+
+End-to-end pipeline entry point.
+
+Defines input and output file paths
+
+Executes the full ETL flow:
+
+extract_data() – raw data ingestion and validation
+
+transform_data() – cleaning, feature engineering, and reduction
+
+load_data() – saving the final dataset
+
+This script is the recommended way to run Phase 1 from start to finish.
+
+#### transform.py
+
+Core transformation engine for Phase 1.
+
+Performs dependency-aware missing value imputation
+
+Applies binarization and categorical encoding
+
+Adds aggregated and derived features
+
+Applies discretization to numeric variables
+
+Reduces dimensionality using correlation and duplication analysis
+
+Formats column names for readability
+
+This module consolidates all preprocessing logic.
+
+#### missingValues.py
+
+Advanced missing value imputation.
+
+Uses a dependency map to impute missing values contextually
+
+Searches for similar rows based on related features
+
+Falls back to global medians when no matches are found
+
+Preserves integer semantics where required
+
+Provides smarter imputation than simple mean/median strategies.
+
+#### features.py
+
+Feature engineering module.
+
+Creates interaction and ratio-based features such as:
+
+Stress–sleep ratio
+
+Insomnia pressure
+
+Distraction load
+
+Work-to-social ratio
+
+Burnout rate
+
+Handles division-by-zero safely
+
+Enhances analytical expressiveness of the dataset.
+
+feature_reduction_enhanced.py
+
+Explainable dimensionality reduction.
+
+Removes exact duplicate columns
+
+Removes highly correlated features
+
+Preserves protected columns
+
+Logs the reason for every feature removal
+
+Performs final row deduplication
+
+Ensures a compact, non-redundant feature space.
+
+#### protected_cols.py
+
+Feature protection configuration.
+
+Defines columns that must never be dropped during reduction
+
+Used by the enhanced feature reduction step
+
+Safeguards critical engineered features.
+
+#### load.py
+
+Data loading and persistence layer.
+
+Writes the final processed DataFrame to CSV
+
+Ensures consistent formatting and no index column
+
+Marks the completion of Phase 1.
+
+Dataset: social_media_vs_productivity.csv
+
+Raw input dataset.
+
+Serves as the source data for Phase 1
+
+Contains demographic, behavioral, productivity, and wellbeing variables
+
+#### Phase 1 Output
+
+The output of Phase 1 is:
+
+A fully processed and cleaned dataset
+
+Advanced feature engineering applied
+
+Missing values intelligently imputed
+
+Redundant features removed with explanations
+
+Columns formatted for analysis
+
+Dataset saved as a CSV file ready for modeling or analysis
+
