@@ -370,12 +370,12 @@ Features:
 <img width="1198" height="572" alt="image" src="https://github.com/user-attachments/assets/9cb5a5b6-067d-44b1-ba96-a220ede8de50" />
 
 
-### Multidimensional Data Visualizations
+## Multidimensional Data Visualizations
 
 This section presents both **interactive** and **static multidimensional visualizations** derived from the dataset containing demographic, behavioral, productivity, stress, sleep, and social media usage indicators.  
 The objective is to uncover relationships across multiple dimensions while maintaining interpretability and analytical clarity.
-## Interactive Multidimensional Visualizations
-### Impact of Stress Level on Insomnia and Sleep Quality
+### Interactive Multidimensional Visualizations
+#### Impact of Stress Level on Insomnia and Sleep Quality
 
 **Chart Type:** Line Combination  
 
@@ -387,7 +387,7 @@ To highlight the direct impact of stress on sleep-related outcomes in a fixed an
 
 <img width="857" height="661" alt="image" src="https://github.com/user-attachments/assets/4747ab0b-c0bf-4f5d-a41d-8bca3b59f102" />
 
-### Productivity and Notification Frequency Across Work Break Levels
+#### Productivity and Notification Frequency Across Work Break Levels
 
 **Chart Type:** Line Combination
 **Description:**  
@@ -398,7 +398,7 @@ To explore how break frequency influences productivity and digital distraction.
 
 <img width="660" height="558" alt="image" src="https://github.com/user-attachments/assets/68b7cbed-db57-42c6-92d4-9cd25848977b" />
 
-### Burnout Risk by Stress Level and Sleep Hours
+#### Burnout Risk by Stress Level and Sleep Hours
 
 **Chart Type:** Colored Side-by-Side Bar Chart 
 
@@ -410,8 +410,8 @@ To analyze burnout patterns using multiple dimensions in an interactive environm
 
 <img width="790" height="516" alt="image" src="https://github.com/user-attachments/assets/7ba5a27b-57b4-4d0b-8635-3dc55557eef5" />
 
-## Static Multidimensional Visualizations
-### Social Media Platform Preferences by Job Type
+### Static Multidimensional Visualizations
+#### Social Media Platform Preferences by Job Type
 
 **Chart Type:** Stacked / Grouped Bar Chart  
 
@@ -423,7 +423,7 @@ To enable exploratory analysis of platform usage patterns across professional gr
 
 <img width="683" height="510" alt="image" src="https://github.com/user-attachments/assets/830a002e-7997-48ca-a9e8-825960b0b069" />
 
-### Comparison of Average Age and Job Satisfaction Across Genders
+#### Comparison of Average Age and Job Satisfaction Across Genders
 
 **Chart Type:** Stacked / Grouped Bar Chart  
 
