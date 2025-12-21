@@ -408,6 +408,8 @@ This visualization explores how Burnout Risk varies across different Stress Leve
 **Purpose:**  
 To analyze burnout patterns using multiple dimensions in an interactive environment.
 
+<img width="790" height="516" alt="image" src="https://github.com/user-attachments/assets/7ba5a27b-57b4-4d0b-8635-3dc55557eef5" />
+
 ## Static Multidimensional Visualizations
 ### Social Media Platform Preferences by Job Type
 
