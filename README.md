@@ -308,6 +308,7 @@ Visualize different types of data appropriately
 ### Categorical Data Visualization
 
 Chart Type: Pie Charts
+
 Purpose: Show the proportion of categories within a selected variable.
 
 Available Categories:
@@ -329,6 +330,7 @@ Features:
 ### Binary Data Visualization
 
 Chart Type: Bar Chart
+
 Purpose: Display the count of binary outcomes (0 / 1).
 
 Available Binary Variables:
@@ -349,6 +351,7 @@ Features:
 ### Numerical Data Visualization
 
 Chart Type: Histogram
+
 Purpose: Analyze the distribution of continuous numerical variables.
 
 Available Numerical Variables:
