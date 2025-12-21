@@ -1,4 +1,3 @@
-
 <table border="0">
  <tr>
     <td><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/University_of_Prishtina_logo.svg/1200px-University_of_Prishtina_logo.svg.png" width="150" alt="University Logo" /></td>
@@ -292,4 +291,81 @@ All figures are exported to analysis/output/ for reporting and presentation use.
 * Clear insights into behavioral, productivity, and wellbeing patterns
 * Transparent identification of extreme or anomalous observations
 * A clean, modeling‑ready dataset with full traceability
+
+## Phase 3 - Data visualization
+This phase focuses on visualizing the dataset based on data types to better understand patterns, distributions, and relationships.
+Interactive dashboards were created to allow users to explore categorical, binary, and numerical variables dynamically.
+
+The goal of this phase is to transform raw data into clear, interpretable visual insights that support analysis and decision-making.
+Objectives
+
+Visualize different types of data appropriately
+
+* Enable interactive selection of variables
+* Identify distributions, proportions, and imbalances
+* Improve data understanding before modeling or analysis
+
+### Categorical Data Visualization
+
+Chart Type: Pie Charts
+Purpose: Show the proportion of categories within a selected variable.
+
+Available Categories:
+
+* Gender (F, M, O)
+* Job Type (Education, Finance, Health, etc.)
+* Job Optimism (Optimistic, Neutral, Pessimistic)
+
+Features:
+
+* Dropdown menu to select the categorical variable
+* Dynamic legend updates
+* Clear comparison of category proportions
+
+<img width="645" height="493" alt="image" src="https://github.com/user-attachments/assets/7335efef-df60-4281-954f-e5ebb9371eed" />
+<img width="585" height="462" alt="image" src="https://github.com/user-attachments/assets/ee4a0107-b91f-45bf-a919-5ba4557759cd" />
+<img width="605" height="423" alt="image" src="https://github.com/user-attachments/assets/79b92530-9322-4d98-8445-de6f353e6315" />
+
+### Binary Data Visualization
+
+Chart Type: Bar Chart
+Purpose: Display the count of binary outcomes (0 / 1).
+
+Available Binary Variables:
+
+* High Stress
+* Social Addicted
+* Low Sleep
+* Too Many Notifications
+* Burnout Risk
+
+Features:
+
+* Dropdown selection for binary variables
+* Count comparison between 0 (No) and 1 (Yes)
+  
+<img width="577" height="497" alt="image" src="https://github.com/user-attachments/assets/6aa11e7b-f5a6-497c-a277-832b168446c4" />
+
+### Numerical Data Visualization
+
+Chart Type: Histogram
+Purpose: Analyze the distribution of continuous numerical variables.
+
+Available Numerical Variables:
+
+* Sleep Hours
+* Work Hours Per Day
+* Daily Social Media Time
+* Stress Level
+* Actual Productivity Score
+* Job Satisfaction Score
+
+Features:
+* Adjustable binning through interaction
+* Frequency-based distribution
+* Clear visualization of spread and central tendency
+<img width="1198" height="572" alt="image" src="https://github.com/user-attachments/assets/9cb5a5b6-067d-44b1-ba96-a220ede8de50" />
+
+
+
 
