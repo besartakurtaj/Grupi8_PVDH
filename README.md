@@ -386,3 +386,14 @@ This visualization analyzes the relationship between **Stress Level**, **Insomni
 To highlight the direct impact of stress on sleep-related outcomes in a clear, fixed, and descriptive visual form.
 
 <img width="857" height="661" alt="image" src="https://github.com/user-attachments/assets/4747ab0b-c0bf-4f5d-a41d-8bca3b59f102" />
+
+### Productivity and Notification Frequency Across Work Break Levels
+
+**Chart Type:** Line Combination Chart  
+
+**Description:**  
+This visualization compares **Actual Productivity Score** and **Number of Notifications** across different levels of **Breaks During Work**. Interactive filters allow dynamic comparison between groups while preserving the same chart structure.
+
+**Purpose:**  
+To explore how break frequency influences productivity and exposure to digital distractions.
+
