@@ -102,9 +102,9 @@ Supports:
 * Defines input and output file paths
 * Executes the full ETL flow:
 
-** extract_data() – raw data ingestion and validation
-** transform_data() – cleaning, feature engineering, and reduction
-** load_data() – saving the final dataset
+  - `extract_data()` – raw data ingestion and validation
+  - `transform_data()` – cleaning, feature engineering, and reduction
+  - `load_data()` – saving the final dataset
 
 This script is the recommended way to run Phase 1 from start to finish.
 
@@ -166,7 +166,7 @@ This script is the recommended way to run Phase 1 from start to finish.
 * Ensures consistent formatting and no index column
 * Marks the completion of Phase 1.
 
-** Dataset: social_media_vs_productivity.csv **
+**Dataset: social_media_vs_productivity.csv**
 
 * Raw input dataset.
 * Serves as the source data for Phase 1
@@ -200,7 +200,7 @@ Phase 2 extends the pipeline with in-depth statistical exploration, visual analy
 ### outliers_detection.py
 
 * Robust multivariate outlier detection and auditing module.
-*This script applies two independent statistical methods to numeric features:
+* This script applies two independent statistical methods to numeric features:
 * Interquartile Range (IQR) — robust to skewed distributions
 * Z‑Score (|z| > 3) — sensitive to extreme deviations
   
@@ -257,7 +257,7 @@ Final dataset with outliers removed, used for analysis and modeling.
 
 <img width="3557" height="2362" alt="risk_prevalence" src="https://github.com/user-attachments/assets/a49159c1-e6f7-4a90-805d-13978146d6a4" />
 
-** Quantifies the proportion of the population affected by: **
+**Quantifies the proportion of the population affected by:**
 * Excessive notifications
 * Burnout risk
 * High stress
@@ -270,13 +270,13 @@ Final dataset with outliers removed, used for analysis and modeling.
 * Stress Impact on Work Performance
 * Dual scatter analysis showing:
 
-** Stress vs productivity (colored by job satisfaction) **
+**Stress vs productivity (colored by job satisfaction)**
 
 * Stress vs job satisfaction (colored by productivity)
 * Includes trend lines and correlation coefficients for interpretability.
 * Dataset Demographics Overview
 
-** Visual breakdown of:**
+**Visual breakdown of:**
 * Gender distribution
 * Job type distribution
 * Job optimism categories
@@ -285,7 +285,7 @@ All figures are exported to analysis/output/ for reporting and presentation use.
 
 ### Phase 2 Output
 
-** Phase 2 delivers:**
+**Phase 2 delivers:**
 
 * A statistically validated and visually interpreted dataset
 * Clear insights into behavioral, productivity, and wellbeing patterns
@@ -297,7 +297,6 @@ This phase focuses on visualizing the dataset based on data types to better unde
 Interactive dashboards were created to allow users to explore categorical, binary, and numerical variables dynamically.
 
 The goal of this phase is to transform raw data into clear, interpretable visual insights that support analysis and decision-making.
-Objectives
 
 Visualize different types of data appropriately
 
@@ -322,15 +321,7 @@ Available Categories:
 * Job Type (Education, Finance, Health, etc.)
 * Job Optimism (Optimistic, Neutral, Pessimistic)
 
-Features:
-
-* Dropdown menu to select the categorical variable
-* Dynamic legend updates
-* Clear comparison of category proportions
-
-<img width="645" height="493" alt="image" src="https://github.com/user-attachments/assets/7335efef-df60-4281-954f-e5ebb9371eed" />
-<img width="585" height="462" alt="image" src="https://github.com/user-attachments/assets/ee4a0107-b91f-45bf-a919-5ba4557759cd" />
-<img width="605" height="423" alt="image" src="https://github.com/user-attachments/assets/79b92530-9322-4d98-8445-de6f353e6315" />
+<img width="863" height="643" alt="image" src="https://github.com/user-attachments/assets/c993461b-a9be-486b-b75d-ef03db95e330" />
 
 ### Binary Data Visualization
 
@@ -345,11 +336,6 @@ Available Binary Variables:
 * Low Sleep
 * Too Many Notifications
 * Burnout Risk
-
-Features:
-
-* Dropdown selection for binary variables
-* Count comparison between 0 (No) and 1 (Yes)
   
 <img width="577" height="497" alt="image" src="https://github.com/user-attachments/assets/6aa11e7b-f5a6-497c-a277-832b168446c4" />
 
@@ -368,10 +354,6 @@ Available Numerical Variables:
 * Actual Productivity Score
 * Job Satisfaction Score
 
-Features:
-* Adjustable binning through interaction
-* Frequency-based distribution
-* Clear visualization of spread and central tendency
 <img width="1198" height="572" alt="image" src="https://github.com/user-attachments/assets/9cb5a5b6-067d-44b1-ba96-a220ede8de50" />
 
 
