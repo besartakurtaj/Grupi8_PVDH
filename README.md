@@ -307,7 +307,7 @@ Visualize different types of data appropriately
 ### Interactive Dashboard (Tableau Public)
 
 🔗 **Tableau Public Dashboard:**  
-https://public.tableau.com/views/Grupi2-SocialMediavsProductivity-PDHV-Master/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
+https://public.tableau.com/views/Grupi8-SocialMediavsProductivity-PVDH-Master/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 
 ### Categorical Data Visualization
 
