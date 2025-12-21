@@ -397,3 +397,4 @@ This visualization compares **Actual Productivity Score** and **Number of Notifi
 **Purpose:**  
 To explore how break frequency influences productivity and exposure to digital distractions.
 
+<img width="660" height="558" alt="image" src="https://github.com/user-attachments/assets/68b7cbed-db57-42c6-92d4-9cd25848977b" />
